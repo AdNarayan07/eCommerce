@@ -89,8 +89,9 @@ const Users = () => {
                   <select
                     value={user.role}
                     onChange={(e) => handleRoleChange(user.username, e.target.value)}
-                    className="border p-1 rounded"
+                    className="border p-1 rounded disabled:cursor-not-allowed"
                     disabled={user.username === "@root"}
+                    title={user.username === "@root" ? "Cannot Edit @root User": ""}
                   >
                     <option value="admin">Admin</option>
                     <option value="seller">Seller</option>
@@ -99,9 +100,10 @@ const Users = () => {
                 </td>
                 <td className="py-2 px-4">
                   <button
-                    className="bg-red-500 text-white px-4 py-1 rounded disabled:opacity-50"
+                    className="bg-red-500 text-white px-4 py-1 rounded disabled:opacity-50 disabled:cursor-not-allowed"
                     onClick={() => handleDelete(user.username)}
                     disabled={user.username === "@root"}
+                    title={user.username === "@root" ? "Cannot Delete @root User": ""}
                   >
                     Delete
                   </button>

@@ -1,0 +1,1 @@
+import{r as s,j as n}from"./index-CgKEB7Lk.js";const x=({src:r,alt:e,fallbackSrc:o,className:a=""})=>{const[c,t]=s.useState(r);s.useEffect(()=>{t(r)},[r]);const m=()=>{t(o)};return n.jsx("img",{src:c,alt:e,onError:m,className:a})};export{x as I};
