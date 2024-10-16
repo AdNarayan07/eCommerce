@@ -160,11 +160,11 @@ const Orders = ({ by }) => {
                   </button>
                 </td>
               ) : (
-                <td className="py-2 px-4 text-center">
+                <td className="py-2 px-4 flex justify-between">
                   <select
                     value={selectedStatus[o.id] || o.status}
                     onChange={(e) => handleStatusChange(o.id, e.target.value)}
-                    className="bg-gray-100 px-2 py-0.5 rounded border border-gray-300"
+                    className="bg-gray-100 px-2 py-0.5 rounded border border-gray-300 disabled:cursor-not-allowed"
                     disabled={o.status.startsWith("Cancelled")}
                   >
                     <option value="Placed">Placed</option>
@@ -176,8 +176,9 @@ const Orders = ({ by }) => {
                       <option value="Cancelled by Shopper">Cancelled by Shopper</option></>}
                   </select>
                   <button
-                    className="ml-2 bg-blue-600 px-2 py-0.5 rounded text-white"
+                    className="ml-2 bg-blue-600 px-2 py-0.5 rounded text-white disabled:opacity-50 disabled:cursor-not-allowed"
                     onClick={() => handleStatusUpdate(o.id)}
+                    disabled={o.status.startsWith("Cancelled")}
                   >
                     Update
                   </button>
