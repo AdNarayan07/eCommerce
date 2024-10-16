@@ -34,12 +34,15 @@ const Products = () => {
     try {
       const pakka = confirm(`Do you want to delete product ${id}?`);
       if (pakka) {
+        nProgress.start()
         await removeProduct(id, token);
         setProducts((products) => products.filter((p) => p.id !== id));
         alert(`Product ${id} deleted`);
       }
     } catch (err) {
       handleError(err, navigateTransition, useDispatch)
+    } finally {
+      nProgress.done()
     }
   };
 

@@ -24,8 +24,8 @@ const ChangePasswordDialog = ({ onClose }) => {
   const validateForm = () => {
     const newErrors = {};
     const strongPasswordPattern =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~])[A-Za-z\d!"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~]{8,}$/;
+  
     if (!form.currentPassword) newErrors.currentPassword = "Current Password is required.";
     if (!form.newPassword) {
       newErrors.newPassword = "New Password is required.";

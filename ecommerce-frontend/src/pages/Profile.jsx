@@ -103,10 +103,7 @@ const Profile = () => {
             <div className="flex space-x-4">
               {isEditable ? (
                 <>
-                  <button
-                    type="submit"
-                    className="bg-green-500 text-white px-4 py-2 rounded"
-                  >
+                  <button type="submit" className="bg-green-500 text-white px-4 py-2 rounded">
                     Save
                   </button>
                   <button
@@ -121,23 +118,28 @@ const Profile = () => {
                 <>
                   <button
                     type="button"
-                    className="bg-blue-500 text-white px-4 py-2 rounded"
+                    className="bg-blue-500 text-white px-4 py-2 rounded disabled:opacity-50 disabled:cursor-not-allowed"
                     onClick={handleEdit}
                     disabled={user.username === "@root"}
+                    title={user.username === "@root" ? "Cannot Edit @root User": ""}
                   >
                     Edit
                   </button>
                   <button
                     type="button"
-                    className="bg-red-500 text-white px-4 py-2 rounded"
+                    className="bg-red-500 text-white px-4 py-2 rounded disabled:opacity-50 disabled:cursor-not-allowed"
                     onClick={() => setPwdChangeDialog(true)}
+                    disabled={user.username === "@root"}
+                    title={user.username === "@root" ? "Cannot Edit @root User": ""}
                   >
                     Change Password
                   </button>
                   <button
                     type="button"
-                    className="bg-red-700 text-white px-4 py-2 rounded"
+                    className="bg-red-700 text-white px-4 py-2 rounded disabled:opacity-50 disabled:cursor-not-allowed"
                     onClick={() => setDeleteDialog(true)} // Open the delete dialog
+                    disabled={user.username === "@root"}
+                    title={user.username === "@root" ? "Cannot Delete @root User": ""}
                   >
                     Delete Account
                   </button>
@@ -149,16 +151,10 @@ const Profile = () => {
           <Orders by={"shopper"} />
         )}
 
-        {pwdChangeDialog && (
-          <ChangePasswordDialog onClose={() => setPwdChangeDialog(false)} />
-        )}
+        {pwdChangeDialog && <ChangePasswordDialog onClose={() => setPwdChangeDialog(false)} />}
 
         {/* Render the Delete Account Dialog */}
-        {deleteDialog && (
-          <DeleteAccountDialog
-            onClose={() => setDeleteDialog(false)}
-          />
-        )}
+        {deleteDialog && <DeleteAccountDialog onClose={() => setDeleteDialog(false)} />}
       </div>
     )
   );

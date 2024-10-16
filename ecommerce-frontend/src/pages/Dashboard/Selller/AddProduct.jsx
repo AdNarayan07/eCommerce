@@ -3,6 +3,7 @@ import { addProduct } from "../../../app/API/productsApi";
 import { useState } from "react";
 import { handleError } from "../../../hooks/functions";
 import useNavigateTransition from "../../../hooks/useNavigateTransition";
+import nProgress from "nprogress";
 
 const AddProduct = () => {
   const [product, setProduct] = useState({
@@ -69,6 +70,7 @@ const AddProduct = () => {
     }
 
     try {
+      nProgress.start()
       const data = await addProduct(product, token);
       setProduct({
         name: "",
@@ -81,6 +83,8 @@ const AddProduct = () => {
       alert("Product created with id: " + data.id);
     } catch (err) {
       handleError(err, dispatch, navigateTransition)
+    } finally {
+      nProgress.done()
     }
   };
 

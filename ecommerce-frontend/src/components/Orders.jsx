@@ -70,22 +70,28 @@ const Orders = ({ by }) => {
     try {
       const pakka = confirm(`Do you want to cancel the order?`);
       if (pakka) {
+        nProgress.start()
         const data = await cancel(id, token);
         setOrders((orders) => orders.map((o) => (o.id === id ? data : o)));
         alert(`Order ${id} cancelled`);
       }
     } catch (err) {
       handleError(err, navigateTransition, dispatch);
+    } finally {
+      nProgress.done()
     }
   };
 
   const handleStatusUpdate = async (id) => {
     try {
+      nProgress.start()
       const data = await updateOrderStatus(id, token, {status: selectedStatus[id]});
       setOrders((orders) => orders.map((o) => (o.id === id ? data : o)));
       alert(`Order ${id} status updated to ${selectedStatus[id]}`);
     } catch (err) {
       handleError(err, navigateTransition, dispatch);
+    } finally {
+      nProgress.done()
     }
   };
 
