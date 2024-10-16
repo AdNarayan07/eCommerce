@@ -1,0 +1,15 @@
+{
+  "name": "ecommerce",
+  "version": "1.0.0",
+  "description": "eCommerce Website to Buy/Sell Products",
+  "scripts": {
+    "start": "concurrently \"cd ecommerce-backend && npm start\" \"cd ecommerce-frontend && vite\"",
+    "build": "cd ecommerce-frontend && npm run build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^9.0.1"
+  }
+}

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite + React</title>
+    <style>
+      /* Inline CSS for the loading component */
+      .loading-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh; /* Full viewport height */
+        background-color: #f8f9fa; /* Light background */
+        position: absolute; /* Cover the entire screen */
+        width: 100%;
+        top: 0;
+        left: 0;
+        z-index: -1; /* Ensure it appears below other elements */
+      }
+      .spinner {
+        border: 8px solid rgba(0, 0, 0, 0.1); /* Light border */
+        border-left-color: #007bff; /* Blue color for the spinner */
+        border-radius: 50%;
+        width: 60px; /* Spinner size */
+        height: 60px; /* Spinner size */
+        margin-bottom: 20px; /* Space between spinner and message */
+        animation: spin 1s linear infinite; /* Animation for spinning */
+      }
+      .loading-message {
+        font-size: 1.2rem; /* Larger text size */
+        color: #495057; /* Darker text color */
+      }
+      @keyframes spin {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+    <script type="module" crossorigin src="/assets/index-CgZGQlFR.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-B8MVSkto.css">
+  </head>
+  <body>
+    <div class="loading-container" id="loading">
+      <div class="spinner"></div>
+    </div>
+    <div id="root"></div>
+  </body>
+</html>
