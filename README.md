@@ -74,9 +74,9 @@ npm run initialise
 ```
 this will install all the dependencies in root, frontend and backend directories.
 
-4. Run the App
+### Run the App
 
-- To run the application in development mode, run following command in root directory:
+1. To run the application in development mode, run following command in root directory:
 ```bash
 npm run start:dev
 ```
@@ -84,14 +84,14 @@ npm run start:dev
 This will start the backend API server on port 3000 and frontend `vite` server on port 5173 simultaneously using `concurrently`.
 
     
-  - To run the application in production mode, run following command in root directory:
+2. To run the application in production mode, run following command in root directory:
 ```bash
 npm run start:prod
 ```
 
-This will first `vite build` the frontend code in `./ecommerce-backend/dist` folder and then run the backend server on port 3000, the frontend and API both will be served throgh the same server. We can then upload the `./ecommerce-backend` folder on a web hosting platform like this: https://adnarayan-ecommerce.onrender.com/
+This will first `vite build` the frontend code in `./ecommerce-backend/dist` folder and then run the backend server on port 3000, the frontend and API both will be served throgh the same server. We can then upload the `./ecommerce-backend` folder on a web hosting platform like this: https://adnarayan-ecommerce.glitch.me
 
 
 ## Global State Management with Redux
-The global state of the application is managed using **Redux**. This ensures smooth state management across different parts of the frontend application. State slices such as `authSlice`, `productsSlice`, and `transitionSlice` are used to manage authentication, product listings, and transitions respectively.
+The global state of the application is managed using **Redux**. This ensures smooth state management across different parts of the frontend application. State slices such as `authSlice`, `productsSlice`, and `transitionSlice` are used to manage user and token state, products list, and loading state respectively.
 
