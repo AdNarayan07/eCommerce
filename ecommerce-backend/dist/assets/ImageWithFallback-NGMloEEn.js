@@ -1,1 +1,0 @@
-import{r as s,j as g}from"./index-B9PCgfjE.js";const u=({src:r,alt:e,fallbackSrc:o,className:a="",prefixAPI_URL:c=!0})=>{const m="/api/images/",[n,t]=s.useState(r);s.useEffect(()=>{t(r)},[r]);const i=()=>{t(o)};return g.jsx("img",{src:(c?m:"")+n,alt:e,onError:i,className:a})};export{u as I};

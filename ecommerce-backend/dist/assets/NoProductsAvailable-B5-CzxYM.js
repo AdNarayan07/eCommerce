@@ -1,0 +1,1 @@
+import{j as e}from"./index-CFOAx0lL.js";const l=()=>e.jsxs("div",{className:"flex flex-col items-center justify-center h-full bg-gray-100 font-semibold text-4xl p-10",children:[e.jsx("p",{className:"text-8xl",children:":("}),e.jsx("p",{className:"mt-8",children:"No Products Available"})]});export{l as N};
