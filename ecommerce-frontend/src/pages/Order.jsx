@@ -7,62 +7,64 @@ import nProgress from "nprogress";
 import NotAllowedPage from "./Errors/403";
 import NotFoundPage from "./Errors/404";
 import ISEpage from "./Errors/500";
-import { handleError, color } from "../hooks/functions";
-import useNavigateTransition from "../hooks/useNavigateTransition";
+import { handleError, color } from "../utils/functions";
+import useNavigateTransition from "../utils/useNavigateTransition";
 import Loading from "../components/Loading";
 import ImageWithFallback from "../components/ImageWithFallback";
 
 const Order = () => {
-  const { id } = useParams();
-  const token = useSelector((state) => state.auth.token);
-  const dispatch = useDispatch();
-  const navigateTransition = useNavigateTransition();
+  const { id } = useParams(); // Get the order ID from the URL
+  const token = useSelector((state) => state.auth.token); // Get the auth token from Redux
+  const dispatch = useDispatch(); // Redux dispatch function
+  const navigateTransition = useNavigateTransition(); // Custom hook for navigation transitions
 
-  const [order, setOrder] = useState(null);
-  const [err, setErr] = useState(null);
+  const [order, setOrder] = useState(null); // State for the order details
+  const [err, setErr] = useState(null); // State for error handling
 
   useEffect(() => {
     const loadOrder = async () => {
       try {
-        const data = await fetchOrder(id, token);
+        const data = await fetchOrder(id, token); // Fetch order data
         console.log("meow", data);
-        setOrder(data);
-        setErr(null);
+        setOrder(data); // Set order data
+        setErr(null); // Clear any previous error
       } catch (err) {
-        handleError(err, navigateTransition, dispatch, false);
-        setErr(err);
+        handleError(err, navigateTransition, dispatch, false); // Handle errors
+        setErr(err); // Set the error state
       } finally {
-        dispatch(setPending(false));
-        nProgress.done();
+        dispatch(setPending(false)); // Set pending state to false
+        nProgress.done(); // Complete the progress bar
       }
     };
-    loadOrder();
+    loadOrder(); // Call the loadOrder function
   }, []);
 
   const OrderPage = () => {
-    const Product = order.Product;
-    const buyer = order.User;
-    const seller = Product?.User;
+    const Product = order.Product; // Get product from order
+    const buyer = order.User; // Get buyer details
+    const seller = Product?.User; // Get seller details
 
+    // Define status stages based on order status
     const statusStagesCancelled = ["Placed", order.status];
     const statusStagesNormal = ["Placed", "Shipped", "Out for Delivery", "Delivered"];
 
+    // Determine if the order is cancelled
     const isCancelled =
       order.status === "Cancelled by Seller" || order.status === "Cancelled by Shopper";
 
-    // Use either the cancelled stages or normal stages based on the order status
+    // Use appropriate status stages based on cancellation
     const statusStages = isCancelled ? statusStagesCancelled : statusStagesNormal;
 
-    // Function to calculate the progress bar width based on status
+    // Function to calculate the progress bar width
     const calculateProgressWidth = () => {
       const currentIndex = statusStages.indexOf(order.status);
       const totalStages = statusStages.length - 1;
-      return (currentIndex / totalStages) * 100;
+      return (currentIndex / totalStages) * 100; // Calculate percentage
     };
 
-    const totalPrice = order.price;
-    const deliveryCharges = order.deliveryFee;
-    const totalAmount = totalPrice + deliveryCharges;
+    const totalPrice = order.price; // Total price from order
+    const deliveryCharges = order.deliveryFee; // Delivery charges from order
+    const totalAmount = totalPrice + deliveryCharges; // Total amount calculation
 
     return (
       <div className="container mx-auto p-6">
@@ -70,7 +72,7 @@ const Order = () => {
         <div className="w-full bg-gray-300 rounded-full h-2.5 mb-1">
           <div
             className={`bg-${color(order.status)}-600 h-2.5 rounded-full`}
-            style={{ width: `${calculateProgressWidth()}%` }}
+            style={{ width: `${calculateProgressWidth()}%` }} // Dynamic width
           ></div>
         </div>
         {/* Status Names Below Progress Bar */}
@@ -80,7 +82,7 @@ const Order = () => {
               key={index}
               className={`${stage === order.status ? `font-bold text-${color(stage)}-950` : ""}`}
             >
-              {stage}
+              {stage} {/* Display each status stage */}
             </span>
           ))}
         </div>
@@ -141,8 +143,8 @@ const Order = () => {
           {/* Right Column - Product Details and Order Summary */}
           <div className="bg-gray-100 flex flex-wrap p-4 border-2 rounded-lg h-fit">
             <ImageWithFallback
-              src={Product.id}
-              fallbackSrc="/images/default.jpg"
+              src={Product.id} // Image source
+              fallbackSrc="/images/default.jpg" // Fallback image
               className="max-w-64 max-h-96 rounded-lg object-cover mr-4"
             />
 
@@ -152,7 +154,9 @@ const Order = () => {
                 <h3 className="text-lg font-semibold">{Product?.name || <i>Deleted Product</i>}</h3>
                 <hr className="border-gray-400 border-b mb-2" />
                 <p className="text-gray-600">{Product?.shortDescription}</p>
-                <p className={`text-green-600 font-bold ${!Product?.price && "italic"}`}>₹{Product?.price || totalPrice/order.quantity}</p>
+                <p className={`text-green-600 font-bold ${!Product?.price && "italic"}`}>
+                  ₹{Product?.price || totalPrice / order.quantity} {/* Display price */}
+                </p>
               </div>
               <h3 className="text-lg font-semibold mt-4">Order Summary</h3>
               <hr className="border-gray-400 border-b mb-2" />
@@ -181,6 +185,7 @@ const Order = () => {
     );
   };
 
+  // Error handling based on error status
   if (err) {
     switch (err.status) {
       case 403:
@@ -191,7 +196,8 @@ const Order = () => {
         return <ISEpage />;
     }
   }
-  return !order ? <Loading component={"Order"} /> : <OrderPage />;
+  
+  return !order ? <Loading component={"Order"} /> : <OrderPage />; // Conditional rendering
 };
 
 export default Order;

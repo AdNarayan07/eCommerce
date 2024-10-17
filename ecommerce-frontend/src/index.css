@@ -3,5 +3,5 @@
 @tailwind utilities;
 
 .prose * {
-    all: revert
+    all: revert /* Revert all styles to the default browser styles */
 }

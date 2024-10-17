@@ -3,14 +3,14 @@ import ImageWithFallback from "../../components/ImageWithFallback";
 import { useParams } from "react-router-dom";
 import { updateProduct } from "../../app/API/productsApi";
 import { useDispatch, useSelector } from "react-redux";
-import { handleError } from "../../hooks/functions";
-import useNavigateTransition from "../../hooks/useNavigateTransition";
+import { handleError } from "../../utils/functions";
+import useNavigateTransition from "../../utils/useNavigateTransition";
 import nProgress from "nprogress";
 
 const EditProduct = ({ setIsEditing, product, setProduct }) => {
-  const { id } = useParams();
-  const token = useSelector((state) => state.auth.token);
-  const [tempProduct, setTempProduct] = useState(product);
+  const { id } = useParams(); // Get product ID from URL parameters
+  const token = useSelector((state) => state.auth.token); // Get authentication token from Redux store
+  const [tempProduct, setTempProduct] = useState(product); // State for temporary product details
   const navigateTransition = useNavigateTransition();
   const dispatch = useDispatch();
 
@@ -20,20 +20,20 @@ const EditProduct = ({ setIsEditing, product, setProduct }) => {
     const reader = new FileReader();
 
     reader.onloadend = () => {
-      const data = reader.result;
+      const data = reader.result; // Set image data when loaded
       setTempProduct((prev) => ({
         ...prev,
-        image: data,
+        image: data, // Update product image state
       }));
     };
 
     const maxFileSize = 5 * 1024 * 1024; // 5 MB
     if (file) {
       if (file.size > maxFileSize) {
-        alert(`File size exceeds the limit of ${maxFileSize / (1024 * 1024)} MB`);
-        setTempProduct((prev) => ({ ...prev, image: null }));
+        alert(`File size exceeds the limit of ${maxFileSize / (1024 * 1024)} MB`); // Alert if file size exceeds limit
+        setTempProduct((prev) => ({ ...prev, image: null })); // Reset image state
       } else {
-        reader.readAsDataURL(file);
+        reader.readAsDataURL(file); // Read file as data URL
       }
     }
   };
@@ -42,31 +42,32 @@ const EditProduct = ({ setIsEditing, product, setProduct }) => {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     if (e.target.tagName === "TEXTAREA") {
-      e.target.style.height = "auto";
-      e.target.style.height = e.target.scrollHeight + "px";
+      e.target.style.height = "auto"; // Reset height to auto for dynamic resizing
+      e.target.style.height = e.target.scrollHeight + "px"; // Set height based on content
     }
-    setTempProduct((prev) => ({ ...prev, [name]: value }));
+    setTempProduct((prev) => ({ ...prev, [name]: value })); // Update temporary product state
   };
 
   const handleSaveChanges = async () => {
+    // Handle saving changes to the product
     try {
-      nProgress.start();
+      nProgress.start(); // Start loading progress
       let data = await updateProduct(id, tempProduct, token); // API call to update the product
       await fetch(import.meta.env.VITE_API_URL + "/images/" + id).catch((e) => console.log(e));
       console.log(data);
-      setProduct(data);
-      setTempProduct(data);
-      setIsEditing(false);
-      nProgress.done();
-      alert("Product updated successfully!");
+      setProduct(data); // Update product in parent component
+      setTempProduct(data); // Update temporary product state
+      setIsEditing(false); // Exit editing mode
+      nProgress.done(); // End loading progress
+      alert("Product updated successfully!"); // Notify user of successful update
     } catch (err) {
-      handleError(err, navigateTransition, dispatch);
+      handleError(err, navigateTransition, dispatch); // Handle errors during update
     }
   };
 
   const handleRevert = () => {
-    setIsEditing(false);
-    setTempProduct({});
+    setIsEditing(false); // Exit editing mode
+    setTempProduct({}); // Reset temporary product state
   };
 
   return (
@@ -132,7 +133,7 @@ const EditProduct = ({ setIsEditing, product, setProduct }) => {
           {tempProduct.image !== "!remove" && (
             <button
               className="border p-2 bg-gray-100 hover:bg-gray-200"
-              onClick={() => setTempProduct((prev) => ({ ...prev, image: "!remove" }))}
+              onClick={() => setTempProduct((prev) => ({ ...prev, image: "!remove" }))} // Mark image for removal
             >
               Remove
             </button>
@@ -153,7 +154,7 @@ const EditProduct = ({ setIsEditing, product, setProduct }) => {
         </button>
         <button
           className="bg-green-500 text-white px-4 py-2 rounded-lg"
-          onClick={handleSaveChanges}
+          onClick={handleSaveChanges} // Save changes button
         >
           Save Changes
         </button>

@@ -1,28 +1,38 @@
 import React from "react";
+
+// Function to validate the form fields
 export const validateForm = (form, hasPassword = true) => {
   const newErrors = {};
-  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Simple email regex
-  const phonePattern = /^\d{10}$/;
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Regex for validating email format
+  const phonePattern = /^\d{10}$/; // Regex for validating a 10-digit phone number
   const strongPasswordPattern =
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~])[A-Za-z\d!"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~]{8,}$/;
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~])[A-Za-z\d!"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~]{8,}$/; // Regex for a strong password
     
+  // Username validation
   if (!form.username) {
     newErrors.username = "Username is required.";
   } else if (/\s/.test(form.username)) {
     newErrors.username = "Username cannot contain any whitespaces.";
   }
+
+  // Display name validation
   if (!form.displayname) newErrors.displayname = "Display Name is required.";
+
+  // Email validation
   if (!form.email) {
     newErrors.email = "Email is required.";
   } else if (!emailPattern.test(form.email)) {
     newErrors.email = "Invalid email format.";
   }
+
+  // Phone number validation
   if (!form.phone) {
     newErrors.phone = "Phone Number is required.";
   } else if (!phonePattern.test(form.phone)) {
     newErrors.phone = "Phone Number must be a 10-digit number.";
   }
 
+  // Password validation (if required)
   if (hasPassword) {
     if (!form.password) {
       newErrors.password = "Password is required.";
@@ -37,15 +47,18 @@ export const validateForm = (form, hasPassword = true) => {
     }
   }
   
+  // Role validation
   if (!form.role) newErrors.role = "Role is required.";
 
-  return newErrors;
+  return newErrors; // Return the collected errors
 };
 
+// Component to render the form fields
 const FormFields = ({ form, errors, handleChange, isEditable, isRegistrationForm }) => {
-  const Star = isEditable ? <span className="text-red-500"> *</span> : null;
+  const Star = isEditable ? <span className="text-red-500"> *</span> : null; // Star to indicate required fields
   return (
     <>
+      {/* Username Field */}
       <div className="flex items-center">
         <label htmlFor="username" className="w-1/4 text-sm font-medium text-gray-700">
           Username{isRegistrationForm && Star}
@@ -58,11 +71,12 @@ const FormFields = ({ form, errors, handleChange, isEditable, isRegistrationForm
           value={form.username}
           onChange={handleChange}
           className="border p-2 w-3/4"
-          readOnly={!isRegistrationForm}
+          readOnly={!isRegistrationForm} // Read-only if not in registration mode
         />
       </div>
       <p className="text-red-500 text-xs ml-1/4 mb-2">{errors.username || "ㅤ"}</p>
 
+      {/* Display Name Field */}
       <div className="flex items-center">
         <label htmlFor="displayname" className="w-1/4 text-sm font-medium text-gray-700">
           Display Name{Star}
@@ -75,11 +89,12 @@ const FormFields = ({ form, errors, handleChange, isEditable, isRegistrationForm
           value={form.displayname}
           onChange={handleChange}
           className="border p-2 w-3/4"
-          readOnly={!isEditable}
+          readOnly={!isEditable} // Read-only if form isn't editable
         />
       </div>
       <p className="text-red-500 text-xs ml-1/4 mb-2">{errors.displayname || "ㅤ"}</p>
 
+      {/* Email Field */}
       <div className="flex items-center">
         <label htmlFor="email" className="w-1/4 text-sm font-medium text-gray-700">
           Email{Star}
@@ -92,11 +107,12 @@ const FormFields = ({ form, errors, handleChange, isEditable, isRegistrationForm
           value={form.email}
           onChange={handleChange}
           className="border p-2 w-3/4"
-          readOnly={!isEditable}
+          readOnly={!isEditable} // Read-only if form isn't editable
         />
       </div>
       <p className="text-red-500 text-xs ml-1/4 mb-2">{errors.email || "ㅤ"}</p>
 
+      {/* Phone Number Field */}
       <div className="flex items-center">
         <label htmlFor="phone" className="w-1/4 text-sm font-medium text-gray-700">
           Phone Number{Star}
@@ -109,31 +125,33 @@ const FormFields = ({ form, errors, handleChange, isEditable, isRegistrationForm
           value={form.phone}
           onChange={handleChange}
           className="border p-2 w-3/4"
-          readOnly={!isEditable}
+          readOnly={!isEditable} // Read-only if form isn't editable
         />
       </div>
       <p className="text-red-500 text-xs ml-1/4 mb-2">{errors.phone || "ㅤ"}</p>
 
+      {/* Address Field */}
       <div className="flex items-center">
         <label htmlFor="address" className="w-1/4 text-sm font-medium text-gray-700">
           Address{Star}
         </label>
         <textarea
           id="address"
-          type="text"
           name="address"
           placeholder="Address"
           value={form.address}
           onChange={handleChange}
           className="border p-2 w-3/4"
-          readOnly={!isEditable}
+          readOnly={!isEditable} // Read-only if form isn't editable
           rows={2}
         />
       </div>
       <p className="text-red-500 text-xs ml-1/4 mb-2">{errors.address || "ㅤ"}</p>
 
+      {/* Password Fields (only for registration) */}
       {isRegistrationForm && (
         <>
+          {/* Password Field */}
           <div className="flex items-center">
             <label htmlFor="password" className="w-1/4 text-sm font-medium text-gray-700">
               Password{Star}
@@ -150,6 +168,7 @@ const FormFields = ({ form, errors, handleChange, isEditable, isRegistrationForm
           </div>
           <p className="text-red-500 text-xs ml-1/4 mb-2">{errors.password || "ㅤ"}</p>
 
+          {/* Confirm Password Field */}
           <div className="flex items-center">
             <label htmlFor="password2" className="w-1/4 text-sm font-medium text-gray-700">
               Confirm Password{Star}
@@ -168,6 +187,7 @@ const FormFields = ({ form, errors, handleChange, isEditable, isRegistrationForm
         </>
       )}
 
+      {/* Role Field */}
       <div className="flex items-center">
         <label htmlFor="role" className="w-1/4 text-sm font-medium text-gray-700">
           Role{isRegistrationForm && Star}
@@ -178,14 +198,16 @@ const FormFields = ({ form, errors, handleChange, isEditable, isRegistrationForm
           onChange={handleChange}
           value={form.role}
           className="border p-2 w-3/4"
-          disabled={!isRegistrationForm}
+          disabled={!isRegistrationForm} // Only editable for registration
         >
           <option value="shopper">Shopper</option>
           <option value="seller">Seller</option>
           {!isRegistrationForm && <option value="admin">Admin</option>}
         </select>
       </div>
-      <p className="text-red-500 text-xs ml-1/4 mb-2">{(isRegistrationForm ? errors.role : isEditable && "Contact admin to change your role!") || "ㅤ"}</p>
+      <p className="text-red-500 text-xs ml-1/4 mb-2">
+        {(isRegistrationForm ? errors.role : isEditable && "Contact admin to change your role!") || "ㅤ"}
+      </p>
     </>
   );
 };

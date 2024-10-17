@@ -1,30 +1,32 @@
 import React, { useState } from "react";
-import useNavigateTransition from "../hooks/useNavigateTransition";
+import useNavigateTransition from "../utils/useNavigateTransition";
 import { deleteAccount } from "../app/API/usersApi";
 import { useDispatch, useSelector } from "react-redux";
 import { setPending } from "../app/slice/transitionSlice";
 import { logout } from "../app/slice/authSlice";
-import { handleError } from "../hooks/functions";
+import { handleError } from "../utils/functions";
 
+// Modal component for deleting an account
 const DeleteAccountDialog = ({ onClose }) => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const navigateTransition = useNavigateTransition();
-  const dispatch = useDispatch();
-  const token = useSelector((state) => state.auth.token);
+  const [username, setUsername] = useState(""); // State for username
+  const [password, setPassword] = useState(""); // State for password
+  const navigateTransition = useNavigateTransition(); // Custom hook for page transitions
+  const dispatch = useDispatch(); // Dispatch for Redux actions
+  const token = useSelector((state) => state.auth.token); // Fetch token from Redux state
   
+  // Handle the deletion of the account
   const handleDeleteAccount = async (e) => {
-    e.preventDefault()
+    e.preventDefault(); // Prevent default form submission behavior
     try {
-      dispatch(setPending(true));
-      await deleteAccount(token, { username, password });
-      alert("Account deleted successfully!");
-      dispatch(logout());
-      navigateTransition("/login");
+      dispatch(setPending(true)); // Set loading state
+      await deleteAccount(token, { username, password }); // Call the API to delete the account
+      alert("Account deleted successfully!"); // Notify user
+      dispatch(logout()); // Logout user
+      navigateTransition("/login"); // Redirect to login page
     } catch (err) {
-      handleError(err, navigateTransition, dispatch);
+      handleError(err, navigateTransition, dispatch); // Handle error if any
     } finally {
-      dispatch(setPending(false));
+      dispatch(setPending(false)); // Clear loading state
     }
   };
 
@@ -33,33 +35,38 @@ const DeleteAccountDialog = ({ onClose }) => {
       <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
         <h2 className="text-lg font-semibold mb-4">Delete Account</h2>
         <form onSubmit={handleDeleteAccount}>
+          {/* Username Field */}
           <div className="mb-4">
             <label className="block text-gray-700 mb-2">Username</label>
             <input
               type="text"
               name="username"
               value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              onChange={(e) => setUsername(e.target.value)} // Update username state
               className="w-full px-4 py-2 border rounded"
               required
             />
           </div>
+          
+          {/* Password Field */}
           <div className="mb-4">
             <label className="block text-gray-700 mb-2">Password</label>
             <input
               type="password"
               name="password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => setPassword(e.target.value)} // Update password state
               className="w-full px-4 py-2 border rounded"
               required
             />
           </div>
+          
+          {/* Buttons for cancel and delete */}
           <div className="flex justify-end space-x-4">
             <button
               type="button"
               className="bg-gray-300 px-4 py-2 rounded"
-              onClick={onClose}
+              onClick={onClose} // Close the modal
             >
               Cancel
             </button>

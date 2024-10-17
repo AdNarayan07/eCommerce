@@ -3,8 +3,11 @@
   "version": "1.0.0",
   "description": "eCommerce Website to Buy/Sell Products",
   "scripts": {
-    "start": "concurrently \"cd ecommerce-backend && npm start\" \"cd ecommerce-frontend && vite\"",
-    "build": "cd ecommerce-frontend && npm run build"
+    "start:dev": "concurrently \"cd ecommerce-backend && npm start\" \"cd ecommerce-frontend && vite\"",
+    "start:prod": "npm run build:frontend && npm run start:backend",
+    "start:backend": "cd ecommerce-backend && npm start",
+    "build:frontend": "cd ecommerce-frontend && npm run build",
+    "initialise": "npm install && cd ecommerce-backend && npm install && cd ../ecommerce-frontend && npm install"
   },
   "keywords": [],
   "author": "",

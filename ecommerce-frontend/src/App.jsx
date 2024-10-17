@@ -1,14 +1,15 @@
 import React, { lazy, Suspense, useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import nprogress from "nprogress"; // Import nprogress
+import nprogress from "nprogress"; // Import nprogress for loading indicators
 import "nprogress/nprogress.css"; // Import nprogress styles
 
-import Navbar from "./components/Navbar";
-import { logout, fetchUserSuccess } from "./app/slice/authSlice";
-import { fetchMe } from "./app/API/usersApi";
-import Loading from "./components/Loading";
+import Navbar from "./components/Navbar"; // Navbar component
+import { logout, fetchUserSuccess } from "./app/slice/authSlice"; // Redux actions
+import { fetchMe } from "./app/API/usersApi"; // API function to fetch user data
+import Loading from "./components/Loading"; // Loading component for suspense fallback
 
+// Lazy load pages for better performance
 const Home = lazy(() => import("./pages/Home"));
 const Login = lazy(() => import("./pages/Login"));
 const Register = lazy(() => import("./pages/Register"));
@@ -19,36 +20,37 @@ const Order = lazy(() => import("./pages/Order"));
 const NotFoundPage = lazy(() => import("./pages/Errors/404"));
 
 const App = () => {
-  const dispatch = useDispatch();
-  const token = useSelector((state) => state.auth.token);
-  const isPending = useSelector((state) => state.transition.isPending);
+  const dispatch = useDispatch(); // Redux dispatch function
+  const token = useSelector((state) => state.auth.token); // Get token from Redux state
+  const isPending = useSelector((state) => state.transition.isPending); // Check if transition is pending
 
-  nprogress.configure({ showSpinner: false, speed: 400, minimum: 0.1 });
-  useLocation();
-  nprogress.start();
+  nprogress.configure({ showSpinner: false, speed: 400, minimum: 0.1 }); // Configure nprogress
+  useLocation(); // Access location for routing
+  nprogress.start(); // Start loading progress
 
   useEffect(() => {
     const loadUser = async () => {
       try {
-        if (!token) throw new Error("No token, pls login!");
+        if (!token) throw new Error("No token, please login!");
 
-        const data = await fetchMe(token);
-        dispatch(fetchUserSuccess(data));
+        const data = await fetchMe(token); // Fetch user data
+        dispatch(fetchUserSuccess(data)); // Dispatch success action with user data
       } catch (err) {
         console.error(err);
-        dispatch(logout());
+        dispatch(logout()); // Log out on error
       }
     };
     loadUser();
-  }, [dispatch, token]);
+  }, [dispatch, token]); // Run effect when dispatch or token changes
 
   return (
     <div className="w-screen h-screen bg-white flex flex-col">
-      <Navbar />
+      <Navbar /> {/* Render Navbar */}
       <div
         className={`flex-grow overflow-auto ${isPending ? "opacity-25 pointer-events-none" : ""}`}
       >
         <Routes>
+          {/* Define routes with lazy-loaded components */}
           <Route
             path="/"
             element={
@@ -119,4 +121,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default App; // Export the App component

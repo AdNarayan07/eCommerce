@@ -1,5 +1,5 @@
 import React from 'react';
-import useNavigateTransition from '../../hooks/useNavigateTransition';
+import useNavigateTransition from '../../utils/useNavigateTransition';
 import nprogress from 'nprogress';
 
 const NotFoundPage = () => {

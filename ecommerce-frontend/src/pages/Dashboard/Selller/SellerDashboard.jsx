@@ -4,15 +4,16 @@ import Products from "./Products";
 import Orders from "../../../components/Orders";
 
 const SellerDashboard = () => {
-  const [activeTab, setActiveTab] = useState("addProduct"); // Tab state
+  // State to manage the active tab
+  const [activeTab, setActiveTab] = useState("addProduct");
 
-  // Render content based on active tab
+  // Render content based on the selected tab
   const renderTabContent = () => {
     switch (activeTab) {
-      case "addProduct": return <AddProduct />;
-      case "products": return <Products />;
-      case "orders": return <Orders by={"seller"}/>;
-      default: return null;
+      case "addProduct": return <AddProduct />; // Render AddProduct component
+      case "products": return <Products />;     // Render Products component
+      case "orders": return <Orders by={"seller"}/>; // Render Orders component for seller
+      default: return null;                     // Return null for any unmatched tab
     }
   };
 
@@ -22,6 +23,7 @@ const SellerDashboard = () => {
 
       {/* Tab Navigation */}
       <div className="mb-4 flex space-x-4 w-full">
+        {/* Button to switch to Add Product tab */}
         <button
           onClick={() => setActiveTab("addProduct")}
           className={`px-4 py-2 border rounded ${
@@ -30,6 +32,8 @@ const SellerDashboard = () => {
         >
           Add Product
         </button>
+        
+        {/* Button to switch to My Products tab */}
         <button
           onClick={() => setActiveTab("products")}
           className={`px-4 py-2 border rounded ${
@@ -38,6 +42,8 @@ const SellerDashboard = () => {
         >
           My Products
         </button>
+        
+        {/* Button to switch to My Orders tab */}
         <button
           onClick={() => setActiveTab("orders")}
           className={`px-4 py-2 border rounded ${
@@ -48,7 +54,7 @@ const SellerDashboard = () => {
         </button>
       </div>
 
-      {/* Tab Content */}
+      {/* Display content for the active tab */}
       {renderTabContent()}
     </div>
   );

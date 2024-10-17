@@ -5,6 +5,6 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   build: {
-    outDir: "../ecommerce-backend/dist"
+    outDir: "../ecommerce-backend/dist" // save the built files to backend folder for serving
   }
 })
