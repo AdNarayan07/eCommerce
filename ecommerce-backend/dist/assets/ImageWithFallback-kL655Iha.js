@@ -1,0 +1,1 @@
+import{r as o,j as g}from"./index-dzztCWgy.js";const E=({src:t,alt:a,fallbackSrc:c,className:m="",prefixAPI_URL:r=!0})=>{const s="/api/images/",[n,e]=o.useState((r?s:"")+t);o.useEffect(()=>{e((r?s:"")+t)},[t]);const i=()=>{e(c)};return g.jsx("img",{src:n,alt:a,onError:i,className:m})};export{E as I};
