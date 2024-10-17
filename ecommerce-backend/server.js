@@ -31,7 +31,7 @@ app.use("/api/products", productRoutes);
 app.use("/api/orders", orderRoutes);
 
 // Serve product images
-app.use('/images', serveImages(path.join(__dirname, "database", "product_images")));
+app.use('/api/images', serveImages(path.join(__dirname, "database", "product_images")));
 
 const distPath = path.join(__dirname, "dist");
 

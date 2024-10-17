@@ -52,7 +52,7 @@ const ViewProduct = ({ product, setIsEditing }) => {
     <>
       <h1 className="text-4xl font-bold text-gray-800 mb-6">{product.name}</h1>
       <ImageWithFallback
-        src={`http://localhost:3000/images/${id}`}
+        src={id}
         fallbackSrc="/images/default.jpg"
         className="float-right w-1/3 h-auto rounded-lg shadow-md ml-6 mb-4"
       />

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 
-const ImageWithFallback = ({ src, alt, fallbackSrc, className = "" }) => {
+const ImageWithFallback = ({ src, alt, fallbackSrc, className = "", prefixAPI_URL = true }) => {
+  const API_URL = import.meta.env.VITE_API_URL + "/images/";
+
   const [imgSrc, setImgSrc] = useState(src);
   useEffect(() => {
     setImgSrc(src);
@@ -12,7 +14,7 @@ const ImageWithFallback = ({ src, alt, fallbackSrc, className = "" }) => {
 
   return (
     <img
-      src={imgSrc}
+      src={(prefixAPI_URL ? API_URL : "") + imgSrc}
       alt={alt}
       onError={handleError} // Trigger handleError if img fails to load
       className={className} // Example styling

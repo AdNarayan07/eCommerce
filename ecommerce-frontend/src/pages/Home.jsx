@@ -45,7 +45,7 @@ const Home = () => {
               </h2>
               <div className="h-60 flex items-center justify-center bg-gray-200 mb-4 rounded p-2">
               <ImageWithFallback
-                src={`http://localhost:3000/images/${product.id}`} // Primary image URL
+                src={product.id} // Primary image URL
                 alt={product.name} // Alt text for accessibility
                 fallbackSrc="/images/default.jpg" // Fallback image URL
                 className="max-h-[-webkit-fill-available] max-w-[-webkit-fill-available]"

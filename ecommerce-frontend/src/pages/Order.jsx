@@ -141,7 +141,7 @@ const Order = () => {
           {/* Right Column - Product Details and Order Summary */}
           <div className="bg-gray-100 flex flex-wrap p-4 border-2 rounded-lg h-fit">
             <ImageWithFallback
-              src={`http://localhost:3000/images/${Product?.id}`}
+              src={Product.id}
               fallbackSrc="/images/default.jpg"
               className="max-w-64 max-h-96 rounded-lg object-cover mr-4"
             />

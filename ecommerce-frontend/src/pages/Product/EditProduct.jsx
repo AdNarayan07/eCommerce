@@ -50,17 +50,17 @@ const EditProduct = ({ setIsEditing, product, setProduct }) => {
 
   const handleSaveChanges = async () => {
     try {
-      nProgress.start()
+      nProgress.start();
       let data = await updateProduct(id, tempProduct, token); // API call to update the product
-      await fetch(`http://localhost:3000/images/${id}`)
-      console.log(data)
+      await fetch(import.meta.env.VITE_API_URL + "/images/" + id).catch((e) => console.log(e));
+      console.log(data);
       setProduct(data);
       setTempProduct(data);
       setIsEditing(false);
-      nProgress.done()
+      nProgress.done();
       alert("Product updated successfully!");
     } catch (err) {
-      handleError(err, navigateTransition, dispatch)
+      handleError(err, navigateTransition, dispatch);
     }
   };
 
@@ -94,34 +94,39 @@ const EditProduct = ({ setIsEditing, product, setProduct }) => {
             className="w-full border border-gray-300 rounded-lg px-4 py-2 mb-4"
           />
           <div className="flex justify-between items-center">
-          <label htmlFor="price" className="text-2xl font-bold mb-6 ">Price: ₹ </label>
-          <input
-          id="price"
-            type="number"
-            name="price"
-            value={tempProduct.price}
-            onChange={handleInputChange}
-            className="text-2xl font-bold text-green-600 mb-6 border border-gray-300 rounded-lg px-4 py-2"
-          />
+            <label htmlFor="price" className="text-2xl font-bold mb-6 ">
+              Price: ₹{" "}
+            </label>
+            <input
+              id="price"
+              type="number"
+              name="price"
+              value={tempProduct.price}
+              onChange={handleInputChange}
+              className="text-2xl font-bold text-green-600 mb-6 border border-gray-300 rounded-lg px-4 py-2"
+            />
           </div>
           <div className="flex justify-between items-center">
-          <label htmlFor="quantity" className="text-2xl font-bold mb-6 ">Stock: </label>
-          <input
-            id="quantity"
-            type="number"
-            name="quantity"
-            value={tempProduct.quantity}
-            onChange={handleInputChange}
-            className="text-2xl font-bold text-green-600 mb-6 border border-gray-300 rounded-lg px-4 py-2"
-          />
+            <label htmlFor="quantity" className="text-2xl font-bold mb-6 ">
+              Stock:{" "}
+            </label>
+            <input
+              id="quantity"
+              type="number"
+              name="quantity"
+              value={tempProduct.quantity}
+              onChange={handleInputChange}
+              className="text-2xl font-bold text-green-600 mb-6 border border-gray-300 rounded-lg px-4 py-2"
+            />
           </div>
         </div>
         <div className="mb-4 ml-6 w-128 flex flex-col space-y-4 items-center">
           <label htmlFor="image-upload" className="w-full block">
             <ImageWithFallback
-              src={tempProduct.image || `http://localhost:3000/images/${id}`}
+              src={tempProduct.image || id}
               fallbackSrc="/images/upload_image_placeholder.png"
               className="w-full h-full rounded-lg shadow-md cursor-pointer"
+              prefixAPI_URL={!tempProduct.image}
             />
           </label>
           {tempProduct.image !== "!remove" && (
