@@ -1,4 +1,4 @@
-# Fullstack eCommerce Project
+# eCommerce Project with Global Redux State Management
 
 This project is a fullstack eCommerce platform that allows users to browse, purchase, and manage products. The application is split into two main components: the **backend** (ecommerce-backend) and the **frontend** (ecommerce-frontend). The backend serves as the API layer, handling authentication, product management, and orders, while the frontend offers a smooth user interface to interact with the platform.
 
@@ -61,27 +61,36 @@ Ensure you have the following installed on your machine:
 git clone https://github.com/AdNarayan07/eCommerce.git
 cd eCommerce
 ```
+
 2. Create a `./ecommerce-backend/.env` file with following content:
 ```env
 JWT_SECRET=YOUR_JWT_SECRET
 ROOT_PASSWORD=PASSWORD_FOR_@root_USER
 ```
+
 3. Initialise the project:
 ```bash
 npm run initialise
 ```
 this will install all the dependencies in root, frontend and backend directories.
-4. 
-  - To run the application in development mode, run following command in root directory:
+
+4. Run the App
+
+- To run the application in development mode, run following command in root directory:
 ```bash
 npm run start:dev
 ```
-    This will start the backend API server on port 3000 and frontend `vite` server on port 5173 simultaneously using `concurrently`.
+
+This will start the backend API server on port 3000 and frontend `vite` server on port 5173 simultaneously using `concurrently`.
+
+    
   - To run the application in production mode, run following command in root directory:
 ```bash
 npm run start:prod
 ```
-    This will first `vite build` the frontend code in `./ecommerce-backend/dist` folder and then run the backend server on port 3000, the frontend and API both will be served throgh the same server. We can then upload the `./ecommerce-backend` folder on a web hosting platform like this: https://adnarayan-ecommerce.onrender.com/
+
+This will first `vite build` the frontend code in `./ecommerce-backend/dist` folder and then run the backend server on port 3000, the frontend and API both will be served throgh the same server. We can then upload the `./ecommerce-backend` folder on a web hosting platform like this: https://adnarayan-ecommerce.onrender.com/
+
 
 ## Global State Management with Redux
 The global state of the application is managed using **Redux**. This ensures smooth state management across different parts of the frontend application. State slices such as `authSlice`, `productsSlice`, and `transitionSlice` are used to manage authentication, product listings, and transitions respectively.
