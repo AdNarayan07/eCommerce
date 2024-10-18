@@ -5,11 +5,34 @@ This project is a fullstack eCommerce platform that allows users to browse, purc
 ## Features
 
 - **Authentication**: Secure login and registration for users.
-- **Product Management**: Admins and sellers can add, edit, and remove products.
-- **Order Management**: Users can create and track orders.
+- **Product Management**: Sellers can add, edit, and remove products.
+- **Order Management**: Users can create and cancel orders.
 - **Image Serving**: Product images are managed and served efficiently.
 - **Global State Management**: Frontend state is managed using Redux.
-- **Role-Based Authorization**: Different access levels for admins, sellers, and users.
+- **Role-Based Authorization**: Different access levels for admins, sellers, and shoppers.
+
+### Users and their role:
+- **Admin**: Has Access to Admin Dashboard and admin-only dashboard.
+    - Can edit User Roles and Order Status.
+    - Can delete users.
+- **Seller**: Has access to Seller Dashboard.
+    - Can create and edit products.
+    - Can cancel the orders for their products.
+    - Cannot purchase or comment on their own product.
+- **All logged in Users**:
+    - Can buy an item.
+    - Can review an item they purchased.
+    - Can view and cancel their orders.
+    - Can manage and delete their account.
+
+### Routes and their content:
+**`/`**: View all listed products.
+**`/login`**: Log in to your account.
+**`/register`**: Register a new user.
+**`/product/:id`**: View the product with given id.
+**`/dashboard`**: For Admins, a place to manage users and all orders. For sellers, a place to add and manage products and manage the orders for their products.
+**`/order/:id`**: View the order with given id.
+**`/profile`**: Edit your account, or password and delete your account. View and manage the orders you placed.
 
 ## Tech Stack
 
@@ -91,6 +114,13 @@ npm run start:prod
 
 This will first `vite build` the frontend code in `./ecommerce-backend/dist` folder and then run the backend server on port 3000, the frontend and API both will be served throgh the same server. We can then upload the `./ecommerce-backend` folder on a web hosting platform like this: https://adnarayan-ecommerce.glitch.me
 
+```
+Note: A root user with
+Username: @root
+Password: process.env.ROOT_USER
+will be created when application starts with admin role.
+You can log in to the account to manage other users.
+```
 
 ## Global State Management with Redux
 The global state of the application is managed using **Redux**. This ensures smooth state management across different parts of the frontend application. State slices such as `authSlice`, `productsSlice`, and `transitionSlice` are used to manage user and token state, products list, and loading state respectively.
