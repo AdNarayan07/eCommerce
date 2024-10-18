@@ -26,13 +26,13 @@ This project is a fullstack eCommerce platform that allows users to browse, purc
     - Can manage and delete their account.
 
 ### Routes and their content:
-**`/`**: View all listed products.
-**`/login`**: Log in to your account.
-**`/register`**: Register a new user.
-**`/product/:id`**: View the product with given id.
-**`/dashboard`**: For Admins, a place to manage users and all orders. For sellers, a place to add and manage products and manage the orders for their products.
-**`/order/:id`**: View the order with given id.
-**`/profile`**: Edit your account, or password and delete your account. View and manage the orders you placed.
+- **`/`**: View all listed products.
+- **`/login`**: Log in to your account.
+- **`/register`**: Register a new user.
+- **`/product/:id`**: View the product with given id.
+- **`/dashboard`**: For Admins, a place to manage users and all orders. For sellers, a place to add and manage products and manage the orders for their products.
+- **`/order/:id`**: View the order with given id.
+- **`/profile`**: Edit your account, or password and delete your account. View and manage the orders you placed.
 
 ## Tech Stack
 
